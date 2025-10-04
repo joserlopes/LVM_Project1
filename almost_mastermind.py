@@ -17,7 +17,6 @@ def mastermind1(B):
     # Each position needs to have a number
     for pos in P:
         s.add(Or(pos))
-    print(s)
 
     # Each position can only have *one* number
     for i in range(guess_len):
@@ -27,49 +26,48 @@ def mastermind1(B):
 
     # Since we only have black pegs, consider the number of combinations of size `peg_value`
     # because we know for sure one of those combinations is right
-    for guess_i, peg_i in zip(range(0, len(B), 2), range(1, len(B), 2)):
+    for guess_i, black_peg_i in zip(range(0, len(B), 2), range(1, len(B), 2)):
         guess = B[guess_i]
-        peg = B[peg_i]
+        black_peg = B[black_peg_i]
         guess_with_indices = list(enumerate(guess))
-        if peg == 0:
+        if black_peg == 0:
             for value_i, value in guess_with_indices:
                 s.add(Not(P[value_i][value]))
-        combinations_list = combinations(guess_with_indices, peg)
-        # Maybe here we can do the thing were we only consider those that are in front??
-        for combination in combinations_list:
-            present = []
-            not_present = []
-            for value_i, value in guess_with_indices:
-                if (value_i, value) in combination:
-                    present.append(P[value_i][value])
-                else:
-                    not_present.append(Not(P[value_i][value]))
-            for not_present_value in not_present:
-                if peg == 1:
-                    print(present, not_present_value)
-                s.add(Implies(And(present), not_present_value))
-        # s.add(Implies(And(present), And(not_present)))
+        else:
+            combinations_list = combinations(guess_with_indices, black_peg)
+            # NOTE: maybe here we can do the thing were we only consider those that are in front??
 
-    # s.add(P[0][3])
-    # s.add(P[1][9])
-    # s.add(P[2][5])
-    # s.add(P[3][4])
-    # s.add(P[4][2])
-    if s.check() == sat:
+            # Essentially what this is doing is it adds a clause for each combination that says
+            # that the numbers in combination can be part of the right solution and the others
+            # not so...
+            clauses_to_add = []
+            for combination in combinations_list:
+                present = []
+                not_present = []
+                for value_i, value in guess_with_indices:
+                    if (value_i, value) in combination:
+                        present.append(P[value_i][value])
+                    else:
+                        not_present.append(Not(P[value_i][value]))
+                clauses_to_add.append(And(present + not_present))
+            s.add(Or(clauses_to_add))
+
+    solutions = []
+    while s.check() == sat:
         m = s.model()
         candidates = [p.name() for p in m.decls() if m[p]]
 
-        return convert(candidates)
-        # solutions.append(convert(candidates))
-        #
-        # block = [p() != m[p] for p in m.decls()]
-        # s.add(Or(block))
-    else:
-        print("Unsat!!")
+        solutions.append(convert(candidates))
+
+        block = [p() != m[p] for p in m.decls()]
+        s.add(Or(block))
+
+    return solutions
 
 
-# def unique_solution1(B):
-#     pass
+def unique_solution1(B):
+    return len(mastermind1(B)) == 1
+
 
 B1 = [
     [9, 0, 3, 4, 2],
@@ -132,5 +130,8 @@ B2 = [
     [2, 6, 5, 9, 8, 6, 2, 6, 3, 7, 3, 1, 6, 8, 6, 7],
     2,
 ]
+
 print(mastermind1(B1))
-# print(mastermind1(B2))
+print(unique_solution1(B1))
+print(mastermind1(B2))
+print(unique_solution1(B2))
