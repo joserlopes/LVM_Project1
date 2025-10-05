@@ -9,6 +9,7 @@ def convert(w):
     return "".join([str(l[1]) for l in a])
 
 
+# TODO: Maybe convert this to only work with indices. Might speed up the algorithm
 def mastermind1(B):
     guess_len = len(B[0])
     P = [[Bool(f"P_{i}_{n}") for n in range(10)] for i in range(1, guess_len + 1)]
