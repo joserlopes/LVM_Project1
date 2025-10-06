@@ -9,7 +9,6 @@ def convert(w):
     return "".join([str(l[1]) for l in a])
 
 
-# TODO: Maybe convert this to only work with indices. Might speed up the algorithm
 def mastermind1(B):
     guess_len = len(B[0])
     P = [[Bool(f"P_{i}_{n}") for n in range(10)] for i in range(1, guess_len + 1)]
@@ -30,12 +29,11 @@ def mastermind1(B):
     for guess_i, black_peg_i in zip(range(0, len(B), 2), range(1, len(B), 2)):
         guess = B[guess_i]
         black_peg = B[black_peg_i]
-        guess_with_indices = list(enumerate(guess))
         if black_peg == 0:
-            for value_i, value in guess_with_indices:
-                s.add(Not(P[value_i][value]))
+            for value_i in range(guess_len):
+                s.add(Not(P[value_i][guess[value_i]]))
         else:
-            combinations_list = combinations(guess_with_indices, black_peg)
+            combinations_list = combinations(range(guess_len), black_peg)
             # NOTE: maybe here we can do the thing were we only consider those that are in front??
 
             # Essentially what this is doing is it adds a clause for each combination that says
@@ -45,11 +43,11 @@ def mastermind1(B):
             for combination in combinations_list:
                 present = []
                 not_present = []
-                for value_i, value in guess_with_indices:
-                    if (value_i, value) in combination:
-                        present.append(P[value_i][value])
+                for value_i in range(guess_len):
+                    if value_i in combination:
+                        present.append(P[value_i][guess[value_i]])
                     else:
-                        not_present.append(Not(P[value_i][value]))
+                        not_present.append(Not(P[value_i][guess[value_i]]))
                 clauses_to_add.append(And(present + not_present))
             s.add(Or(clauses_to_add))
 
