@@ -47,6 +47,8 @@ def mastermind1(B):
                     if value_i in combination:
                         present.append(P[value_i][guess[value_i]])
                     else:
+                        # NOTE: Here we can remove all the possible positions if the number doesn't
+                        # appear on black and white. Is this optimization worth it?
                         not_present.append(Not(P[value_i][guess[value_i]]))
                 clauses_to_add.append(And(present + not_present))
             s.add(Or(clauses_to_add))

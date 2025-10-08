@@ -45,6 +45,8 @@ def mastermind2(B):
                 for white_position in white_combination:
                     not_present.append(Not(P[white_position][guess[white_position]]))
 
+                # NOTE: Here we can remove all the possible positions if the number doesn't
+                # appear on black and white. Is this optimization worth it?
                 for remaining_position in remaining_positions:
                     not_present.append(
                         Not(P[remaining_position][guess[remaining_position]])
@@ -110,15 +112,9 @@ B1 = [
     3,
 ]
 
-# B2 = [
-#     [1, 2, 3, 4, 5, 6],
-#     1,
-#     2,
-# ]
-
 # NOTE: This two examples are the same as almost_mastermind. Just seeing if this works
 # with no white pegs
-B3 = [
+B2 = [
     [9, 0, 3, 4, 2],
     2,
     0,
@@ -139,7 +135,7 @@ B3 = [
     0,
 ]
 
-B4 = [
+B3 = [
     [5, 6, 1, 6, 1, 8, 5, 6, 5, 0, 5, 1, 8, 2, 9, 3],
     2,
     0,
@@ -209,6 +205,5 @@ B4 = [
 ]
 
 print(mastermind2(B1))
+print(mastermind2(B2))
 print(mastermind2(B3))
-print(mastermind2(B4))
-# print(mastermind2(B2))
