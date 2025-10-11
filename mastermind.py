@@ -1,6 +1,6 @@
 from z3 import And, Bool, Implies, Not, Or, Solver, sat
 from itertools import combinations, permutations
-
+import time, sys
 
 def convert(w):
     a = sorted(
@@ -14,6 +14,8 @@ def mastermind2(B):
     P = [[Bool(f"P_{i}_{n}") for n in range(10)] for i in range(1, guess_len + 1)]
     s = Solver()
 
+    start_time = time.time()
+    
     for guess_i, black_peg_i, white_peg_i in zip(
         range(0, len(B), 3), range(1, len(B), 3), range(2, len(B), 3)
     ):
@@ -47,6 +49,7 @@ def mastermind2(B):
 
                 # NOTE: Here we can remove all the possible positions if the number doesn't
                 # appear on black and white. Is this optimization worth it?
+                # Yes :D //zemarques
                 for remaining_position in remaining_positions:
                     not_present.append(
                         Not(P[remaining_position][guess[remaining_position]])
@@ -77,8 +80,21 @@ def mastermind2(B):
             for k in range(j + 1, 10):
                 s.add(Implies(P[i][j], Not(P[i][k])))
 
+    build_time = time.time() - start_time
+    print(f"Board len = {guess_len}", file=sys.stderr)
+    print(f"Guess num = {len(B) // 3}", file=sys.stderr)
+    print(f"formula building time = {build_time:.4f}s", file=sys.stderr)
+
+    start_solve_time = time.time()
+
     solutions = []
+    print_once = 1
     while s.check() == sat:
+        
+        # weird way of doing ifs
+        print(print_once * f"first solving time = {time.time() - start_solve_time:.4f}s", file=sys.stderr, end=print_once * "\n")
+        print_once *= 0
+        
         m = s.model()
         candidates = [p.name() for p in m.decls() if m[p]]
 
@@ -87,6 +103,7 @@ def mastermind2(B):
         block = [p() != m[p] for p in m.decls()]
         s.add(Or(block))
 
+    print( f"total solving time = {time.time() - start_solve_time:.4f}s", file=sys.stderr)
     return solutions
 
 
