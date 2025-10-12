@@ -1,4 +1,4 @@
-# Generating one satisfiable 20-guess Mastermind board and printing it in the requested Python-list format.
+# Generating one satisfiable Mastermind board
 import random
 import sys
 
@@ -25,9 +25,9 @@ for _ in range(n):
     board.append([guess, fb[0], fb[1]])
 
 # Print in the user's compact style: secret + flat list entries for the board
-print("# secret code =", secret)
-print(f"board_{n} = [")
+# print("# secret code =", secret)
+print(f"[")
 for entry in board:
     guess, a, b = entry
     print("    {}, {}, {},".format(guess, a, b))
-print("]")
+print("],")
