@@ -1,6 +1,6 @@
 #!/bin/bash
 
-len=7
+len=9
 
 for f in `seq 10 2 50`
 do
