@@ -25,7 +25,7 @@ for _ in range(n):
     board.append([guess, fb[0], fb[1]])
 
 # Print in the user's compact style: secret + flat list entries for the board
-# print("# secret code =", secret)
+print("# secret code =", secret)
 print(f"[")
 for entry in board:
     guess, a, b = entry
