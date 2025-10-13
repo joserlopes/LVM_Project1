@@ -1,8 +1,8 @@
 #!/bin/bash
 
-len=5
+len=9
 
-for f in `seq 50 2 100`
+for f in `seq 12 2 20`
 do
     outfile=boards/"boards_increasing_guesses_len_$len"
     echo "Create board of with len of $len and $f guesses"

@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/home/zemarques/lvm/LVM_Project1/mastermind_performace_check.py", line 235, in <module>
+    print(mastermind2(b))
+          ^^^^^^^^^^^^^^
+  File "/home/zemarques/lvm/LVM_Project1/mastermind_performace_check.py", line 91, in mastermind2
+    clauses_to_add.append(And(locked_present + present + not_present))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zemarques/ist-code/mmac/alc/.alc_env/lib/python3.12/site-packages/z3/z3.py", line 1954, in And
+    args = _coerce_expr_list(args, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zemarques/ist-code/mmac/alc/.alc_env/lib/python3.12/site-packages/z3/z3.py", line 1286, in _coerce_expr_list
+    return [s.cast(a) for a in alist]
+            ^^^^^^^^^
+  File "/home/zemarques/ist-code/mmac/alc/.alc_env/lib/python3.12/site-packages/z3/z3.py", line 1584, in cast
+    if not self.eq(val.sort()):
+                   ^^^^^^^^^^
+  File "/home/zemarques/ist-code/mmac/alc/.alc_env/lib/python3.12/site-packages/z3/z3.py", line 1602, in sort
+    return BoolSortRef(Z3_get_sort(self.ctx_ref(), self.as_ast()), self.ctx)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zemarques/ist-code/mmac/alc/.alc_env/lib/python3.12/site-packages/z3/z3core.py", line 3132, in Z3_get_sort
+    _elems.Check(a0)
+  File "/home/zemarques/ist-code/mmac/alc/.alc_env/lib/python3.12/site-packages/z3/z3core.py", line 1579, in Check
+    err = self.get_error_code(ctx)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
