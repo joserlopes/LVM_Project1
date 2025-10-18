@@ -1,8 +1,7 @@
-# Projecto 1 de LVM
+# Logic and Model Checking
 
-### 1- CDCL à pata de uma fórmula bem grande
+Make sure you have z3-solver installed by running:
 
-### 2- Resolver o mastermind com SAT no Z3
-
-## Notas
-é pó 20 :D
+```
+pip install z3-solver
+```
