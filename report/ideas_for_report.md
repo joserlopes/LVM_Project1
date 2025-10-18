@@ -25,8 +25,9 @@ $\bigwedge_{k=1}^{n} \bigwedge_{i = 0}^{8} \bigwedge_{j = i+1}^{9} (\neg p_{ik} 
 
 #### Almost Mastermind - exercise 2.1
 
-if there were no black pegs, we negate the numbers at the current guess's position
-let $a_i$ be the number at the position $i$ of a given guess, where $i = 1, ..., n$
+if there were no black pegs, we negate the numbers at the current guess's position.
+
+Let $a_i$ be the number at the position $i$ of a given guess, where $i = 1, ..., n$
 
 $\bigwedge_{k=1}^{n} \neg p_{a_{i}k}$
 
@@ -37,7 +38,7 @@ let $P_{l}$ be such a set, with $l = 1, ..., b$ and $NP_{l}$ the complement of $
 then $NP_{1} = \{4\}$
 
 
-$\bigvee_{l=1}^{B} \bigwedge_{\substack{  p \in P_{l}  \\ q \in NP_{l}} } p_{a_{p}p} \wedge \neg p_{a_{q}q}$
+$\bigvee_{l=1}^{B} \bigwedge_{\substack{  c \in P_{l}  \\ q \in NP_{l}} } p_{a_{c}c} \wedge \neg p_{a_{c}q}$
 
 #### Full Mastermind - exercise 2.2
 
@@ -49,7 +50,19 @@ $W = \frac{(n-b)!}{w!((n-b)-w)!}$
 
 This is because there's no need to consider positions that we are assuming to be correct for the current combination (stored in $P_{l}$)
 
-Like, ....
+Let $WP_{m}, m = 1, ..., W$ be sets of positions on the guess, where the size of each $WP_{m} = w$ (WP for wrong position).
+
+And so, for each black combination, and for each white combination, we need to consider all permutations of positions
+,which can be positions present in $WP_{m}$. for example, we can have a 2 in position 1 and a 3 in position 2 that are not in the code,
+but if those positions are white (that is, in $WP_{m}$) 3 can be at position 1 and 2 at position 2.
+
+Then, the number of possible permutations is $Perm = (n-b)! / ((n-b) - w)!$, and again, let $V_{z}, z = 1, ..., Perm$ be the sets that have 
+all possible permutations of possible positions where the number indexed by $WP_{m}$ can be, to match the secret code
+
+And finally we can right the encoding as such:
+
+$\bigvee_{l=1}^{B} \bigvee_{m=1}^{W} \bigvee_{z=1}^{Perm} (\bigwedge_{\substack{  c \in P_{l}  \\ q \in NP_{l}} } p_{a_{c}c} \wedge \neg p_{a_{c}q} \bigwedge_{\substack{d \in WP_{m} \\ e \in V_{z}} } \neg p_{a_{d}d} \wedge p_{a_{d}e})$
+
 
 
 ### graphs
