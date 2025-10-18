@@ -25,13 +25,13 @@ $\bigwedge_{k=1}^{n} \bigwedge_{i = 0}^{8} \bigwedge_{j = i+1}^{9} (\neg p_{ik} 
 
 #### Almost Mastermind - exercise 2.1
 
-if there were no black pegs, we negate the numbers at the current guess's position.
+If there are no black pegs, we negate the numbers at the current guess's position.
 
 Let $a_i$ be the number at the position $i$ of a given guess, where $i = 1, ..., n$
 
 $\bigwedge_{k=1}^{n} \neg p_{a_{i}k}$
 
-Else, let $b$ be the number of black pegs. We need to consider all possible groups of $b$ size, without repetition.
+Else, let $b$ be the number of black pegs for a given guess. We need to consider all possible groups of $b$ size, without repetition.
 We get a total of $B = \frac{n!}{b!(n-b)!}$ sets of $b$ size. These sets have, at most, $n$ elements, if $b = n$
 Each of these sets will contain the possible positions with the correct numbers.
 let $P_{l}$ be such a set, with $l = 1, ..., b$ and $NP_{l}$ the complement of $P_{l}$. e.g. if $n = 4$, $b=3$ and $P_{1} = \{1, 2, 3\}$, 
